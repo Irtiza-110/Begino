@@ -1,0 +1,226 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * BEGINO design system — monochrome premium streetwear.
+ * Apple-inspired: tight type, generous whitespace, slow eased transitions.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 6px);
+
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-display: "Archivo", "Inter", Helvetica, Arial, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-sale: var(--sale);
+  --color-sale-foreground: var(--sale-foreground);
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-olive: var(--olive);
+  --color-olive-foreground: var(--olive-foreground);
+  --color-highlight: var(--highlight);
+  --color-cream: var(--cream);
+  --color-cream-foreground: var(--cream-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --ease-apple: cubic-bezier(0.28, 0.11, 0.32, 1);
+}
+
+:root {
+  --radius: 0.75rem;
+
+  /* warm bone / cream base — deepened */
+  --background: oklch(0.928 0.012 92);
+  --foreground: oklch(0.17 0.012 120);
+  --card: oklch(0.955 0.009 95);
+  --card-foreground: oklch(0.17 0.012 120);
+  --popover: oklch(0.955 0.009 95);
+  --popover-foreground: oklch(0.17 0.012 120);
+
+  /* deep olive-black on cream */
+  --primary: oklch(0.2 0.015 125);
+  --primary-foreground: oklch(0.96 0.01 95);
+
+  --secondary: oklch(0.895 0.016 90);
+  --secondary-foreground: oklch(0.2 0.015 125);
+  --muted: oklch(0.895 0.016 90);
+  --muted-foreground: oklch(0.43 0.012 115);
+  --accent: oklch(0.875 0.02 98);
+  --accent-foreground: oklch(0.2 0.015 125);
+
+  --destructive: oklch(0.52 0.17 30);
+  --destructive-foreground: oklch(0.97 0.01 95);
+
+  /* sale accent — muted brick, not neon */
+  --sale: oklch(0.52 0.15 35);
+  --sale-foreground: oklch(0.97 0.01 95);
+
+  /* deep olive surfaces (hero, banners, footer) */
+  --ink: oklch(0.17 0.017 128);
+  --ink-foreground: oklch(0.96 0.012 95);
+
+  /* mid olive band */
+  --olive: oklch(0.585 0.052 118);
+  --olive-foreground: oklch(0.98 0.01 95);
+
+  /* soft cream band — deepened */
+  --cream: oklch(0.895 0.02 86);
+  --cream-foreground: oklch(0.18 0.014 125);
+
+  /* pale lime highlight for hero headline + CTA */
+  --highlight: oklch(0.83 0.1 112);
+
+  --border: oklch(0.835 0.016 93);
+  --input: oklch(0.815 0.016 93);
+  --ring: oklch(0.585 0.052 118);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background: var(--color-foreground);
+    color: var(--color-background);
+  }
+}
+
+/* ---------- Utilities ---------- */
+
+@utility wrap {
+  width: 100%;
+  margin-inline: auto;
+  max-width: 90rem;
+  padding-inline: 1.25rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2.5rem;
+  }
+}
+
+/* Section eyebrow / heading treatment */
+@utility section-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 1.125rem;
+
+  @media (min-width: 768px) {
+    font-size: 1.375rem;
+  }
+}
+
+@utility label-xs {
+  font-size: 0.625rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Apple-style scroll reveal */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.4s var(--ease-apple),
+    transform 0.4s var(--ease-apple);
+  will-change: opacity, transform;
+
+  &[data-visible="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Underline that draws in on hover */
+@utility link-underline {
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s var(--ease-apple);
+  }
+
+  &:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+/* Snappy image zoom on card hover */
+@utility media-zoom {
+  transition: transform 0.45s var(--ease-apple);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+@utility marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
